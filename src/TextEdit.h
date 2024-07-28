@@ -6,7 +6,7 @@
 
 class QrwEmoticons;
 
-class QRWEMOTICONS_EXPORT QrwEmoticonsTextEdit : public QTextEdit
+class QrwEmoticonsTextEdit : public QTextEdit
 {
     Q_OBJECT
 

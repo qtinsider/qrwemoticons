@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.16)
 project(qrwemotions VERSION 0.0.1 LANGUAGES CXX)
 
 # Specify C++ standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Enable automatic processing of Qt MOC, UIC, and RCC files
@@ -27,6 +27,23 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
+qt_add_resources(RESOURCES
+    plugin-google/emoticons_google_0.qrc
+    plugin-google/emoticons_google_1.qrc
+    plugin-google/emoticons_google_2.qrc
+    plugin-google/emoticons_google_3.qrc
+    plugin-google/emoticons_google_4.qrc
+    plugin-google/emoticons_google_5.qrc
+    plugin-google/emoticons_google_6.qrc
+    plugin-twitter/emoticons_twitter_0.qrc
+    plugin-twitter/emoticons_twitter_1.qrc
+    plugin-twitter/emoticons_twitter_2.qrc
+    plugin-twitter/emoticons_twitter_3.qrc
+    plugin-twitter/emoticons_twitter_4.qrc
+    plugin-twitter/emoticons_twitter_5.qrc
+    plugin-twitter/emoticons_twitter_6.qrc
+)
+
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
@@ -40,9 +57,9 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/QrwEmoticons.h
     src/QrwEmoticonsTextObjectInterface_p.h
     src/Global.h
-    src/QrwEmoticonsPlugin.h
     src/TextEdit.h
     src/QrwEmoticonsHelper.h
+    ${RESOURCES}
 )
 
 

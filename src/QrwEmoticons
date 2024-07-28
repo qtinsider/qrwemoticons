@@ -1,4 +1,3 @@
 #include "Global.h"
 #include "QrwEmoticons.h"
 #include "TextEdit.h"
-#include "QrwEmoticonsPlugin.h"

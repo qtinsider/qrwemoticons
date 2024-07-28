@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QDebug>
 #include "QrwEmoticonsTextObjectInterface_p.h"
 #include "QrwEmoticons_p.h"
 
@@ -19,7 +20,7 @@ void QrwEmoticonsTextObjectInterface::drawObject(QPainter *painter, const QRectF
 
     const QRectF drawRect = rect.adjusted(1, 0, -1, 0);
     painter->save();
-    if (!m_Prvt->m_Plugin || !m_Prvt->m_Plugin.interf->hasEmoticon(code))
+    if (!m_Prvt->m_Provider || !m_Prvt->m_Provider->hasEmoticon(code))
     {
         painter->setPen(QPen(Qt::darkGray, 1, Qt::SolidLine));
         painter->setBrush(QColor(240, 240, 240));
@@ -29,7 +30,7 @@ void QrwEmoticonsTextObjectInterface::drawObject(QPainter *painter, const QRectF
     }
     else
     {
-        const QPixmap pix = m_Prvt->m_Plugin.interf->getEmoticon(code, drawRect.size().toSize());
+        const QPixmap pix = m_Prvt->m_Provider->getEmoticon(code, drawRect.size().toSize());
 
         painter->setPen(Qt::NoPen);
         painter->setBrush(Qt::NoBrush);

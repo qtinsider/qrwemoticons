@@ -17,9 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QComboBox *providerComboBox = new QComboBox(toolBar);
     providerComboBox->addItems(QStringList() << "google"
-                                             << "twitter"
-                                             << "openmoji"
-                                             << "joypixels");
+                                             << "twitter");
     providerComboBox->setCurrentText(textEdit->emoticons()->provider());
     connect(providerComboBox, &QComboBox::currentTextChanged, this, [textEdit](const QString &text) {
         textEdit->emoticons()->setProvider(text);

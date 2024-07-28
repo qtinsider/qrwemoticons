@@ -9,12 +9,6 @@
  * LIB MACROS
  */
 
-#if defined(QRWEMOTICONS_LIB)
-#  define QRWEMOTICONS_EXPORT Q_DECL_EXPORT
-#else
-#  define QRWEMOTICONS_EXPORT Q_DECL_IMPORT
-#endif
-
 #define QRWEMOTICONS_DECLARE_PUBLIC(CLASS) \
     CLASS * q_ptr; \
     Q_DECLARE_PUBLIC(CLASS)
@@ -37,7 +31,7 @@
         E.size() == 6 ? EMOTICON_FILENAME_6(E) : \
         E.size() == 7 ? EMOTICON_FILENAME_7(E) : \
         E.size() == 8 ? EMOTICON_FILENAME_8(E) : \
-        QString::null \
+        QString() \
     )
 
 #define EMOTICON_FILENAME_1(E) \

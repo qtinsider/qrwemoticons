@@ -38,8 +38,8 @@ QString QrwEmoticons::getHtml(const QTextCursor &cursor) const
 QString QrwEmoticons::provider() const
 {
     Q_D(const QrwEmoticons);
-    if (d->m_Plugin)
-        return d->m_Plugin.metaData.value(QStringLiteral("id")).toString();
+    if (d->m_Provider)
+        return d->m_Provider->id();
     else
         return QString();
 }

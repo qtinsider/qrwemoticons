@@ -8,7 +8,9 @@
 
 class QrwEmoticonsPrivate;
 
-class QRWEMOTICONS_EXPORT QrwEmoticons : public QObject
+
+
+class QrwEmoticons : public QObject
 {
     Q_OBJECT
 

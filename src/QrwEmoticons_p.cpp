@@ -1,12 +1,69 @@
 #include "QrwEmoticons_p.h"
+
+#include "QrwEmoticonsHelper.h"
 #include "QrwEmoticonsTextObjectInterface_p.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QCoreApplication>
 #include <QLibraryInfo>
+#include <QPainter>
+#include <QPixmapCache>
+#include <QSvgRenderer>
 #include <QTextBlock>
 #include <QTextDocumentFragment>
 #include <QTextLayout>
+
+#include <vector>
+
+QString GoogleProvider::id() const
+{
+    return "google";
+}
+
+QString GoogleProvider::getEmoticonPath(const QrwEmoticons::Emoticon &code) const
+{
+    // Google-Noto doesn't add variation selectors (0xFE0E and 0xFE0F) to their filenames?!
+    QrwEmoticons::Emoticon c = code;
+    c.removeAll(0xFE0E);
+    c.removeAll(0xFE0F);
+    return QStringLiteral(":/QrwEmoticons/google/") % EMOTICON_FILENAME(c) % QStringLiteral(".svg");
+}
+
+bool GoogleProvider::hasEmoticon(const QrwEmoticons::Emoticon &code) const
+{
+    const QString fileName = this->getEmoticonPath(code);
+    return QFile::exists(fileName);
+}
+
+QPixmap GoogleProvider::getEmoticon(const QrwEmoticons::Emoticon &code, const QSize &size) const
+{
+    const QString fileName = this->getEmoticonPath(code);
+    QPixmap pix = QrwEmoticonsHelper::SvgToPixmap(fileName, size);
+    return pix;
+}
+
+QString TwitterProvider::id() const
+{
+    return "twitter";
+}
+
+QString TwitterProvider::getEmoticonPath(const QrwEmoticons::Emoticon &code) const
+{
+    return QStringLiteral(":/QrwEmoticons/twitter/") % EMOTICON_FILENAME(code) % QStringLiteral(".svg");
+}
+
+bool TwitterProvider::hasEmoticon(const QrwEmoticons::Emoticon &code) const
+{
+    const QString fileName = this->getEmoticonPath(code);
+    return QFile::exists(fileName);
+}
+
+QPixmap TwitterProvider::getEmoticon(const QrwEmoticons::Emoticon &code, const QSize &size) const
+{
+    const QString fileName = this->getEmoticonPath(code);
+    QPixmap pix = QrwEmoticonsHelper::SvgToPixmap(fileName, size);
+    return pix;
+}
 
 QrwEmoticonsPrivate::QrwEmoticonsPrivate(QrwEmoticons *q, QTextDocument *document)
     : QObject(q)
@@ -16,9 +73,6 @@ QrwEmoticonsPrivate::QrwEmoticonsPrivate(QrwEmoticons *q, QTextDocument *documen
     , m_MaxEmoticonCharCodeCount(8)
     , m_MinimumEmoticonSize(20, 20)
 {
-    bool loaded = this->loadPlugin();
-    Q_ASSERT(loaded);
-
     Q_ASSERT(m_TextDocument);
     if (m_TextDocument)
     {
@@ -28,12 +82,6 @@ QrwEmoticonsPrivate::QrwEmoticonsPrivate(QrwEmoticons *q, QTextDocument *documen
         m_TextDocument->documentLayout()->registerHandler(QrwEmoticonsPrivate::EmoticonTextFormatObjectType, interf);
         this->applyTextCharFormat();
     }
-}
-
-QrwEmoticonsPrivate::~QrwEmoticonsPrivate()
-{
-    if (m_PluginLoader.isLoaded())
-        m_PluginLoader.unload();
 }
 
 QString QrwEmoticonsPrivate::GetEmoticonString(const QrwEmoticons::Emoticon &code)
@@ -275,55 +323,25 @@ void QrwEmoticonsPrivate::applyTextCharFormat(int pos)
     m_CurrentlyApplying = false;
 }
 
-bool QrwEmoticonsPrivate::loadPlugin(const QString &id)
+void QrwEmoticonsPrivate::loadPlugin(const QString &id)
 {
-    if (id.length() > 0 && m_Plugin.metaData.value(QStringLiteral("id")).toString() == id)
-        return true;
-
-    if (m_PluginLoader.isLoaded())
+    if (id.isEmpty())
     {
-        m_PluginLoader.unload();
-        m_Plugin.clear();
+        return;
     }
 
-    QStringList pluginPaths = QStringList() << QCoreApplication::applicationDirPath() << QLibraryInfo::location(QLibraryInfo::PluginsPath)
-                                            << QCoreApplication::libraryPaths();
+    m_Provider.reset();
 
-    for (int p = 0; p < pluginPaths.count(); ++p)
+    if (id == "google")
     {
-        QString path = pluginPaths.at(p) % QStringLiteral("/emoticons");
-        QDir dir(path);
-        if (!dir.exists(path))
-            continue;
-
-        QStringList files = dir.entryList(QDir::Files);
-        for (int f = 0; f < files.count(); ++f)
-        {
-            QString fileName = files.at(f);
-
-            m_PluginLoader.setFileName(dir.absoluteFilePath(fileName));
-
-            if (m_PluginLoader.metaData().value("IID").toString() != QrwEmoticonsPluginInterface_iid)
-                continue;
-
-            QJsonObject metaData = m_PluginLoader.metaData().value("MetaData").toObject();
-            if (!id.isEmpty() && metaData.value(QStringLiteral("id")).toString() != id)
-                continue;
-
-            if (m_PluginLoader.load())
-            {
-                if (QrwEmoticonsPluginInterface *pluginInterface = qobject_cast<QrwEmoticonsPluginInterface *>(m_PluginLoader.instance()))
-                {
-                    m_Plugin.interf = pluginInterface;
-                    m_Plugin.metaData = metaData;
-                    return true;
-                }
-            }
-        }
+        m_Provider = std::make_unique<GoogleProvider>();
     }
-
-    return false;
+    else if (id == "twitter")
+    {
+        m_Provider = std::make_unique<TwitterProvider>();
+    }
 }
+
 
 int QrwEmoticonsPrivate::getLineHeight(int posInDocument, const QTextFormat &format) const
 {
