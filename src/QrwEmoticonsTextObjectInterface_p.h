@@ -13,14 +13,14 @@ class QrwEmoticonsTextObjectInterface : public QObject, public QTextObjectInterf
     Q_INTERFACES(QTextObjectInterface)
 
 public:
-    explicit QrwEmoticonsTextObjectInterface(QrwEmoticonsPrivate* pvt);
+    explicit QrwEmoticonsTextObjectInterface(QrwEmoticonsPrivate *pvt);
 
     // QTextObjectInterface interface
-    virtual void drawObject(QPainter* painter, const QRectF & rect, QTextDocument* doc, int posInDocument, const QTextFormat & format) Q_DECL_OVERRIDE;
-    virtual QSizeF intrinsicSize(QTextDocument* doc, int posInDocument, const QTextFormat & format) Q_DECL_OVERRIDE;
+    virtual void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format) Q_DECL_OVERRIDE;
+    virtual QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format) Q_DECL_OVERRIDE;
 
 private:
-    QrwEmoticonsPrivate* m_Prvt;
+    QrwEmoticonsPrivate *m_Prvt;
 };
 
-#endif // QRWEMOTICONSTEXTOBJECTINTERFACE_H
+#endif  // QRWEMOTICONSTEXTOBJECTINTERFACE_H

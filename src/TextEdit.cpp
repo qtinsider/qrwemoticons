@@ -3,10 +3,10 @@
 
 #include <QMimeData>
 
-QrwEmoticonsTextEdit::QrwEmoticonsTextEdit(QWidget* parent)
+QrwEmoticonsTextEdit::QrwEmoticonsTextEdit(QWidget *parent)
     : QTextEdit(parent)
 {
-    m_Emoticons = new QrwEmoticons(this->document(),this);
+    m_Emoticons = new QrwEmoticons(this->document(), this);
 }
 
 QString QrwEmoticonsTextEdit::toHtml() const
@@ -19,29 +19,29 @@ QString QrwEmoticonsTextEdit::toPlainText() const
     return m_Emoticons->getPlainText();
 }
 
-QrwEmoticons* QrwEmoticonsTextEdit::emoticons() const
+QrwEmoticons *QrwEmoticonsTextEdit::emoticons() const
 {
     return m_Emoticons;
 }
 
 void QrwEmoticonsTextEdit::relayout()
 {
-    QTextDocument* doc = this->document();
+    QTextDocument *doc = this->document();
     doc->markContentsDirty(0, doc->toPlainText().length());
 }
 
-QMimeData* QrwEmoticonsTextEdit::createMimeDataFromSelection() const
+QMimeData *QrwEmoticonsTextEdit::createMimeDataFromSelection() const
 {
     QTextCursor cursor = this->textCursor();
-    if( NOT cursor.hasSelection() )
+    if (NOT cursor.hasSelection())
         return Q_NULLPTR;
 
-    const QString htmlText = m_Emoticons->getHtml( cursor );
-    const QString plainText = m_Emoticons->getPlainText( cursor );
+    const QString htmlText = m_Emoticons->getHtml(cursor);
+    const QString plainText = m_Emoticons->getPlainText(cursor);
 
-    QMimeData* data = new QMimeData;
-        data->setHtml( htmlText );
-        data->setText( plainText );
+    QMimeData *data = new QMimeData;
+    data->setHtml(htmlText);
+    data->setText(plainText);
     return data;
 }
 
