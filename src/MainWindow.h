@@ -9,10 +9,6 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
-signals:
-
-public slots:
 };
 
 #endif // MAINWINDOW_H

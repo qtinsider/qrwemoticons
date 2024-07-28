@@ -3,7 +3,8 @@
 
 #include <QtCore>
 #include <QObject>
-#include <QrwEmoticons/QrwEmoticons.h>
+
+#include "QrwEmoticons.h"
 
 class QrwEmoticonsPluginInterface : public QObject
 {

@@ -1,4 +1,5 @@
 #include "QrwEmoticons_p.h"
+
 const EmoticonsData QrwEmoticonsPrivate::EMOTICONS{
 	{0x0023},
 	{0x002A},

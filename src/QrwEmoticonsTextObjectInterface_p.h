@@ -1,8 +1,9 @@
 #ifndef QRWEMOTICONSTEXTOBJECTINTERFACE_H
 #define QRWEMOTICONSTEXTOBJECTINTERFACE_H
 
-#include <QrwEmoticons/QrwEmoticons.h>
-#include <QtGui/QTextObjectInterface>
+#include "QrwEmoticons.h"
+
+#include <QTextObjectInterface>
 
 class QrwEmoticonsPrivate;
 

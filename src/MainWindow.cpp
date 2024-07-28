@@ -1,7 +1,8 @@
 #include "MainWindow.h"
+#include "QrwEmoticons"
+
 #include <QTextEdit>
 #include <QtWidgets>
-#include <QrwEmoticons/QrwEmoticons>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

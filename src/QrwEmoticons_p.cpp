@@ -1,5 +1,6 @@
 #include "QrwEmoticons_p.h"
 #include "QrwEmoticonsTextObjectInterface_p.h"
+
 #include <QLibraryInfo>
 #include <QCoreApplication>
 #include <QAbstractTextDocumentLayout>

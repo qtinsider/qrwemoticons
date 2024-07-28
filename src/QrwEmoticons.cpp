@@ -1,4 +1,4 @@
-#include <QrwEmoticons/QrwEmoticons.h>
+#include "QrwEmoticons.h"
 #include "QrwEmoticons_p.h"
 
 QrwEmoticons::QrwEmoticons(QTextDocument* document, QObject* parent)

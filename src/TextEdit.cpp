@@ -1,5 +1,6 @@
-#include <QrwEmoticons/TextEdit.h>
-#include <QrwEmoticons/QrwEmoticons.h>
+#include "TextEdit.h"
+#include "QrwEmoticons.h"
+
 #include <QMimeData>
 
 QrwEmoticonsTextEdit::QrwEmoticonsTextEdit(QWidget* parent)

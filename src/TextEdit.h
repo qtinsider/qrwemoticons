@@ -1,7 +1,7 @@
 #ifndef QRWEMOTICONS_TEXTEDIT_H
 #define QRWEMOTICONS_TEXTEDIT_H
 
-#include <QrwEmoticons/Global.h>
+#include "Global.h"
 #include <QTextEdit>
 
 class QrwEmoticons;

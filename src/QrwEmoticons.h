@@ -1,7 +1,8 @@
 #ifndef QRWEMOTICONS_H
 #define QRWEMOTICONS_H
 
-#include <QrwEmoticons/Global.h>
+#include "Global.h"
+
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextObjectInterface>
 

@@ -1,7 +1,8 @@
 #ifndef QRWEMOTICONS_P_H
 #define QRWEMOTICONS_P_H
 
-#include <QrwEmoticons/QrwEmoticons>
+#include "QrwEmoticons"
+
 #include <QPluginLoader>
 #include <QJsonObject>
 #include <QPointer>
